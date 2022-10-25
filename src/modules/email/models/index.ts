@@ -1,0 +1,5 @@
+export enum EmailTypes {
+  ACCOUNT_CREATE,
+  FORGOT_PASSWORD,
+  ACCOUNT_UPDATE
+}
