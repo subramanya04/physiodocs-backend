@@ -1,13 +1,4 @@
-import { Objective } from 'src/modules/objective/entities/objective.entity';
-import { PlanOfTreatment } from 'src/modules/plan-of-treatment/entities/plan-of-treatment.entity';
-import { Subjective } from 'src/modules/subjective/entities/subjective.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'patient_details' })
 export class Patient {
@@ -34,16 +25,4 @@ export class Patient {
 
   @Column({ name: 'treating_therapist' })
   treatingTherapist: number;
-
-  // @OneToOne(() => Subjective, { cascade: true })
-  // @JoinColumn()
-  // subjective;
-
-  // @OneToOne(() => Objective, { cascade: true })
-  // @JoinColumn()
-  // objective;
-
-  // @OneToOne(() => PlanOfTreatment, { cascade: true })
-  // @JoinColumn()
-  // planOfTreatment;
 }

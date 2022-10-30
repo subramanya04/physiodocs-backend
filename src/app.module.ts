@@ -5,8 +5,6 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { DataSource } from 'typeorm';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {
   AuthModule,
   DepartmentModule,
@@ -42,9 +40,7 @@ import { PlanOfTreatmentModule } from './modules/plan-of-treatment/plan-of-treat
     SubjectiveModule,
     PlanOfTreatmentModule
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useClass: IsAuthenticatedGuard

@@ -1,4 +1,4 @@
-import { Patient } from 'src/modules/patient/entities/patient.entity';
+import { Patient } from '../../patient/entities/patient.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 
 @Entity({ name: 'subjective_assessments' })

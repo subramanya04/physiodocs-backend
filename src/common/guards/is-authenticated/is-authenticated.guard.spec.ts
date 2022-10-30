@@ -4,8 +4,7 @@ import { IsAuthenticatedGuard } from './is-authenticated.guard';
 
 describe('IsAuthenticatedGuard', () => {
   it('should be defined', () => {
-    expect(
-      new IsAuthenticatedGuard(new Reflector(), new JwtService())
-    ).toBeDefined();
+    const result = new IsAuthenticatedGuard(new Reflector(), new JwtService());
+    expect(result).toBeDefined();
   });
 });
