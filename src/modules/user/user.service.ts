@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
-import { Repository } from 'typeorm';
-import { PhysioDocsFilters } from '../../common/models';
+import { Like, Repository } from 'typeorm';
+import { PhysioDocsFilters, PhysioDocsUserRoles } from '../../common/models';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -58,7 +58,7 @@ export class UserService {
   }
 
   async findAndCountBy(filters: CreateUserDto) {
-    let [data, count] = await this.repository.findAndCount({
+    const [data, count] = await this.repository.findAndCount({
       where: {
         ...filters
       },
@@ -166,5 +166,49 @@ export class UserService {
 
   async delete(id: string) {
     return `This action removes a #${id} user`;
+  }
+
+  async search(term: string, userRole: PhysioDocsUserRoles) {
+    const where: unknown[] = [
+      {
+        firstName: Like(`%${term}%`),
+        userRole
+      },
+      {
+        middleName: Like(`%${term}%`),
+        userRole
+      },
+      {
+        lastName: Like(`%${term}%`),
+        userRole
+      }
+    ];
+    if (term && !isNaN(+term)) {
+      where.unshift({
+        userId: Like(+term),
+        userRole
+      });
+    }
+    const [data, count] = await this.repository.findAndCount({
+      where,
+      select: {
+        userId: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        dateOfBirth: true,
+        gender: true,
+        nationality: true,
+        language: true,
+        email: true,
+        phone: true
+      }
+    });
+
+    return {
+      data,
+      messages: [`Users list fetched successfully`],
+      count
+    };
   }
 }

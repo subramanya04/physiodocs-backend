@@ -4,7 +4,7 @@ import { PhysioDocsUserRoles } from '../../../common/models';
 @Entity({ name: 'user_details' })
 export class User {
   @PrimaryGeneratedColumn({ name: 'user_id', type: 'int' })
-  userId: number = 1;
+  userId = 1;
 
   @Column({ name: 'first_name' })
   firstName: string;

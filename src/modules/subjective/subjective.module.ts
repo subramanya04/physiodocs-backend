@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Subjective } from './entities/subjective.entity';
 import { SubjectiveService } from './subjective.service';
-import { SubjectiveController } from './subjective.controller';
 
 @Module({
-  controllers: [SubjectiveController],
-  providers: [SubjectiveService]
+  imports: [TypeOrmModule.forFeature([Subjective])],
+  providers: [SubjectiveService],
+  exports: [SubjectiveService]
 })
 export class SubjectiveModule {}

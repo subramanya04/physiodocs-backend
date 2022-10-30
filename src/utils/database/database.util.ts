@@ -1,12 +1,13 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const getDatabaseOptions = (): TypeOrmModuleOptions => ({
+export const getDatabaseOptions = (dirname: string): TypeOrmModuleOptions => ({
   type: process.env.DB_TYPE as 'mysql' | 'mariadb',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [__dirname + '../../**/*.entity{.ts,.js}'],
-  synchronize: false
+  entities: [`${dirname}/**/*.entity{.ts,.js}`],
+  synchronize: false,
+  logging: process.env.ENV !== 'PROD'
 });
