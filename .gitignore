@@ -55,5 +55,4 @@ Thumbs.db
 /assets/docs
 
 # Environment Files
-.env
 .env.*.template
