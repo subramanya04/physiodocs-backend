@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  PhysioDocsFilters,
-  PhysioDocsResponse,
-  PhysioDocsUserRoles
-} from '../../common/models';
+import { PhysioDocsFilters, PhysioDocsResponse } from '../../common/models';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { Department } from './entities/department.entity';
@@ -16,12 +12,6 @@ export class DepartmentService {
     @InjectRepository(Department)
     private repository: Repository<Department>
   ) {}
-
-  getHealth(): PhysioDocsResponse {
-    return {
-      messages: ['Department Service is running']
-    };
-  }
 
   post(createDepartmentDto: CreateDepartmentDto) {
     return 'This action adds a new department';

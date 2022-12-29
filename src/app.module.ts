@@ -5,8 +5,6 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { DataSource } from 'typeorm';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {
   AuthModule,
   DepartmentModule,
@@ -15,23 +13,24 @@ import {
   UserModule
 } from './modules';
 import { IsAuthenticatedGuard } from './common/guards';
-import { getJwtOptions } from './utils';
+import { getDatabaseOptions, getJwtOptions } from './utils';
 import { DoctorModule } from './modules/doctor/doctor.module';
+import { AssessmentModule } from './modules/assessment/assessment.module';
+import { ObjectiveModule } from './modules/objective/objective.module';
+import { SubjectiveModule } from './modules/subjective/subjective.module';
+import { PlanOfTreatmentModule } from './modules/plan-of-treatment/plan-of-treatment.module';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
 
 @Module({
   imports: [
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'client'),
+    //   exclude: ['/physiodocs-service*']
+    // }),
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      useFactory: () => ({
-        type: process.env.DB_TYPE as 'mysql' | 'mariadb',
-        host: process.env.DB_HOST,
-        port: Number(process.env.DB_PORT),
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false
-      })
+      useFactory: () => getDatabaseOptions(__dirname)
     }),
     JwtModule.registerAsync({
       useFactory: getJwtOptions
@@ -41,11 +40,13 @@ import { DoctorModule } from './modules/doctor/doctor.module';
     DoctorModule,
     PatientModule,
     UserModule,
-    EmailModule
+    EmailModule,
+    AssessmentModule,
+    ObjectiveModule,
+    SubjectiveModule,
+    PlanOfTreatmentModule
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useClass: IsAuthenticatedGuard
